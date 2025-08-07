@@ -13,11 +13,14 @@ class Item extends Model
     use HasUlids;
     use HasUserStamps;
 
-    public $dateFormat = 'U';
+    protected const string TABLE_NAME = 'invoice_items';
+    protected const string DATE_FORMAT = 'U';
 
-    protected $table = 'invoice_items';
+    public $dateFormat = self::DATE_FORMAT;
+    protected $table = self::TABLE_NAME;
 
     protected $fillable = [
+        'invoice_id',
         'model_id',
         'model_type',
         'quantity',
@@ -35,9 +38,25 @@ class Item extends Model
         'price_unit',
     ];
 
+    protected $casts = [
+        'quantity' => 'float',
+        'shipping_fee' => 'float',
+        'insurance_fee' => 'float',
+        'transaction_fee' => 'float',
+        'discount_amount' => 'float',
+        'tax_amount' => 'decimal:4',
+        'service_amount' => 'decimal:4',
+        'mdr_fee' => 'decimal:4',
+        'price_unit' => 'float',
+    ];
+
     public function invoice(): BelongsTo
     {
-        return $this->belongsTo(Invoice::class, 'invoice_id');
+        return $this->belongsTo(Invoice::class);
+    }
 
+    public function getTotalAmountAttribute(): float
+    {
+        return $this->quantity * $this->price_unit;
     }
 }

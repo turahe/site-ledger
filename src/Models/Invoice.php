@@ -15,19 +15,12 @@ class Invoice extends Model
     use HasUlids;
     use HasUserStamps;
 
-    /**
-     * @var string
-     */
-    protected $table = 'invoices';
+    protected const string TABLE_NAME = 'invoices';
+    protected const string DATE_FORMAT = 'U';
 
-    /**
-     * @var string
-     */
-    public $dateFormat = 'U';
+    protected $table = self::TABLE_NAME;
+    public $dateFormat = self::DATE_FORMAT;
 
-    /**
-     * @var string[]
-     */
     protected $fillable = [
         'model_id',
         'model_type',
@@ -37,84 +30,62 @@ class Invoice extends Model
         'insurance_provider_id',
         'insurance_fee',
         'transaction_fee',
-        'currency',
         'discount_voucher',
         'discount_amount',
+        'currency',
+        'issue_date',
+        'due_date',
         'tax_amount',
         'service_amount',
         'mdr_fee',
         'total_amount',
         'total_invoice',
-        'total_unpaid',
         'total_payment',
+        'total_unpaid',
         'total_change',
         'minimum_down_payment',
-        'issue_date',
-        'due_date',
     ];
 
-    /**
-     * @return string[]
-     */
-    protected function casts(): array
-    {
-        return [
-            'metadata' => 'object',
-            'due_date' => 'datetime',
-            'issue_date' => 'datetime',
-            'shipping_fee' => 'float',
-            'insurance_fee' => 'float',
-            'transaction_fee' => 'float',
-            'service_fee' => 'float',
-            'discount_voucher' => 'float',
-            'discount_amount' => 'float',
-            'tax_amount' => 'float',
-            'service_amount' => 'float',
-            'mdr_fee' => 'float',
-            'total_invoice' => 'float',
-            'total_amount' => 'float',
-            'total_payment' => 'float',
-            'minimum_down_payment' => 'float',
-        ];
-    }
+    protected $casts = [
+        'issue_date' => 'datetime',
+        'due_date' => 'datetime',
+        'tax_amount' => 'decimal:4',
+        'service_amount' => 'decimal:4',
+        'mdr_fee' => 'decimal:4',
+        'total_amount' => 'decimal:4',
+        'total_invoice' => 'decimal:4',
+        'total_payment' => 'decimal:4',
+        'total_unpaid' => 'decimal:4',
+        'total_change' => 'decimal:4',
+        'minimum_down_payment' => 'decimal:4',
+        'shipping_fee' => 'float',
+        'insurance_fee' => 'float',
+        'transaction_fee' => 'float',
+        'discount_amount' => 'float',
+    ];
 
     public function items(): HasMany
     {
-        return $this->hasMany(Item::class, 'invoice_id', 'id');
-
-    }
-
-    public function customer()
-    {
-        return $this->author();
-
+        return $this->hasMany(Item::class);
     }
 
     public function payments(): BelongsToMany
     {
-        return $this->belongsToMany(
-            Voucher::class,
-            'invoice_payments',
-            'invoice_id',
-            'receipt_id'
-        )->withPivot([
-            'currency',
-            'amount',
-            'payment_gateway',
-            'payment_method',
-            'payment_channel',
-            'payment_fee',
-            'payment_status_code',
-            'payment_status_message',
-            'payment_issued_at',
-            'payment_expires_at',
-            'metadata',
-        ]);
-
+        return $this->belongsToMany(Voucher::class, 'invoice_payments', 'invoice_id', 'receipt_id')
+            ->withPivot([
+                'currency',
+                'amount',
+                'payment_gateway',
+                'payment_method',
+                'payment_fee',
+                'payment_status_code',
+                'payment_status_message',
+            ])
+            ->withTimestamps();
     }
 
-    protected static function newFactory()
+    protected static function newFactory(): InvoiceFactory
     {
-        return InvoiceFactory::new();
+        return new InvoiceFactory();
     }
 }

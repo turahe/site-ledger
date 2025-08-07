@@ -14,8 +14,8 @@ return new class extends Migration
     {
         Schema::create('invoice_payments', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignIdFor(\Turahe\Ledger\Models\Invoice::class, 'invoice_id')->index();
-            $table->foreignIdFor(\Turahe\Ledger\Models\Voucher::class, 'receipt_id')->index();
+            $table->foreignUlid('invoice_id')->index()->constrained('invoices')->cascadeOnDelete();
+            $table->foreignUlid('receipt_id')->index()->constrained('vouchers')->cascadeOnDelete();
 
             $table->string('currency')->default('IDR')->index();
 
@@ -46,14 +46,8 @@ return new class extends Migration
                 ->constrained('users')
                 ->cascadeOnDelete();
 
-            if (config('core.table.use_timestamps')) {
-                $table->timestamps();
-                $table->softDeletes();
-            } else {
-                $table->integer('created_at')->index()->nullable();
-                $table->integer('updated_at')->index()->nullable();
-                $table->integer('deleted_at')->index()->nullable();
-            }
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

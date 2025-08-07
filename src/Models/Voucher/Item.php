@@ -13,13 +13,28 @@ class Item extends Model
     use HasUlids;
     use HasUserStamps;
 
-    public $dateFormat = 'U';
+    protected const string TABLE_NAME = 'voucher_items';
+    protected const string DATE_FORMAT = 'U';
 
-    protected $table = 'voucher_items';
+    public $dateFormat = self::DATE_FORMAT;
+    protected $table = self::TABLE_NAME;
+
+    protected $fillable = [
+        'voucher_id',
+        'model_id',
+        'model_type',
+        'quantity',
+        'unit',
+        'value',
+    ];
+
+    protected $casts = [
+        'quantity' => 'float',
+        'value' => 'decimal:4',
+    ];
 
     public function voucher(): BelongsTo
     {
         return $this->belongsTo(Voucher::class);
-
     }
 }

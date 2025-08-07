@@ -21,7 +21,7 @@ class User extends \Illuminate\Foundation\Auth\User
      */
     protected static function newFactory()
     {
-        return new UserFactory;
+        return new UserFactory();
     }
 
     public function vouchers()

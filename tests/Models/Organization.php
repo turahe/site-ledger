@@ -19,6 +19,6 @@ class Organization extends Model
      */
     protected static function newFactory()
     {
-        return new OrganizationFactory;
+        return new OrganizationFactory();
     }
 }

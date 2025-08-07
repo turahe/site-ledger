@@ -30,21 +30,15 @@ return new class extends Migration
                 ->constrained('users')
                 ->cascadeOnDelete();
 
-            if (config('core.table.use_timestamps')) {
-                $table->timestamps();
-                $table->softDeletes();
-            } else {
-                $table->integer('created_at')->index()->nullable();
-                $table->integer('updated_at')->index()->nullable();
-                $table->integer('deleted_at')->index()->nullable();
-            }
+            $table->timestamps();
+            $table->softDeletes();
 
             $table->index('id', 'vouchers_id_idx', 'hash');
         });
 
         Schema::create('voucher_items', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignIdFor(\Turahe\Ledger\Models\Voucher::class, 'voucher_id')->index();
+            $table->foreignUlid('voucher_id')->index()->constrained('vouchers')->cascadeOnDelete();
 
             $table->ulidMorphs('model');
             $table->decimal('quantity', 64)->default(1);
@@ -67,14 +61,8 @@ return new class extends Migration
                 ->constrained('users')
                 ->cascadeOnDelete();
 
-            if (config('core.table.use_timestamps')) {
-                $table->timestamps();
-                $table->softDeletes();
-            } else {
-                $table->integer('created_at')->index()->nullable();
-                $table->integer('updated_at')->index()->nullable();
-                $table->integer('deleted_at')->index()->nullable();
-            }
+            $table->timestamps();
+            $table->softDeletes();
 
             $table->index('id', 'voucher_items_id_idx', 'hash');
             $table->index('model_id', 'voucher_items_model_id_idx', 'hash');

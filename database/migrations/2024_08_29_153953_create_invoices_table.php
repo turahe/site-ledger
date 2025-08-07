@@ -51,14 +51,8 @@ return new class extends Migration
                 ->constrained('users')
                 ->cascadeOnDelete();
 
-            if (config('core.table.use_timestamps')) {
-                $table->timestamps();
-                $table->softDeletes();
-            } else {
-                $table->integer('created_at')->index()->nullable();
-                $table->integer('updated_at')->index()->nullable();
-                $table->integer('deleted_at')->index()->nullable();
-            }
+            $table->timestamps();
+            $table->softDeletes();
 
             $table->index('id', 'invoice_id_idx', 'hash');
 
@@ -66,7 +60,7 @@ return new class extends Migration
 
         Schema::create('invoice_items', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignIdFor(\Turahe\Ledger\Models\Invoice::class, 'invoice_id')->index();
+            $table->foreignUlid('invoice_id')->index()->constrained('invoices')->cascadeOnDelete();
 
             $table->ulidMorphs('model');
             $table->decimal('quantity', 64)->default(1);
@@ -102,14 +96,8 @@ return new class extends Migration
                 ->constrained('users')
                 ->cascadeOnDelete();
 
-            if (config('core.table.use_timestamps')) {
-                $table->timestamps();
-                $table->softDeletes();
-            } else {
-                $table->integer('created_at')->index()->nullable();
-                $table->integer('updated_at')->index()->nullable();
-                $table->integer('deleted_at')->index()->nullable();
-            }
+            $table->timestamps();
+            $table->softDeletes();
 
             $table->index('id', 'invoice_items_id_idx', 'hash');
             $table->index('model_id', 'invoice_items_model_id_idx', 'hash');

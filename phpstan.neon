@@ -1,0 +1,68 @@
+parameters:
+    level: 8
+    paths:
+        - src
+        - tests
+    excludePaths:
+        - src/Database/Factories
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        # Laravel Eloquent Model methods
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::factory\(\)#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::new\(\)#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::create\(\)#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::find\(\)#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::where\(\)#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::update\(\)#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::delete\(\)#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::getKey\(\)#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::getMorphClass\(\)#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::items\(\)#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::payments\(\)#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::vouchers\(\)#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::newFactory\(\)#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::setUpDatabase\(\)#'
+        
+        # Specific model static methods
+        - '#Call to an undefined static method Turahe\\Ledger\\Models\\Invoice::create\(\)#'
+        - '#Call to an undefined static method Turahe\\Ledger\\Models\\Invoice::find\(\)#'
+        - '#Call to an undefined static method Turahe\\Ledger\\Models\\Voucher::create\(\)#'
+        - '#Call to an undefined static method Turahe\\Ledger\\Models\\Voucher::find\(\)#'
+        - '#Call to an undefined static method Turahe\\Ledger\\Models\\Invoice\\Item::create\(\)#'
+        - '#Call to an undefined static method Turahe\\Ledger\\Models\\Invoice\\Item::find\(\)#'
+        - '#Call to an undefined static method Turahe\\Ledger\\Models\\Voucher\\Item::create\(\)#'
+        - '#Call to an undefined static method Turahe\\Ledger\\Models\\Voucher\\Item::find\(\)#'
+        - '#Call to an undefined static method Turahe\\Ledger\\Models\\Invoice\\Payment::create\(\)#'
+        - '#Call to an undefined static method Turahe\\Ledger\\Models\\Invoice\\Payment::find\(\)#'
+        
+        # Laravel Eloquent Model properties
+        - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::#'
+        - '#Access to an undefined property Turahe\\Ledger\\Models\\Invoice::#'
+        - '#Access to an undefined property Turahe\\Ledger\\Models\\Voucher::#'
+        - '#Access to an undefined property Turahe\\Ledger\\Models\\Invoice\\Item::#'
+        - '#Access to an undefined property Turahe\\Ledger\\Models\\Voucher\\Item::#'
+        - '#Access to an undefined property Turahe\\Ledger\\Models\\Invoice\\Payment::#'
+        
+        # Laravel Eloquent Collection methods and properties
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Collection#'
+        - '#Cannot call method first\(\) on array#'
+        - '#Cannot call method last\(\) on array#'
+        - '#Cannot access property .* on Illuminate\\Database\\Eloquent\\Model\|null#'
+        - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Collection.*#'
+        
+        # Test method return types and parameters
+        - '#Method .* has no return type specified#'
+        - '#Method .* has parameter .* with no type specified#'
+        
+        # Array type hints
+        - '#return type has no value type specified in iterable type array#'
+        - '#type has no value type specified in iterable type array#'
+        
+        # Generic class type specifications
+        - '#return type with generic class .* does not specify its types#'
+        - '#Class .* extends generic class .* but does not specify its types#'
+        - '#Class .* uses generic trait .* but does not specify its types#'
+        
+        # Missing type hints
+        - '#missingType.iterableValue#'
+        - '#missingType.generics#'

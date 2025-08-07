@@ -12,16 +12,15 @@ class Payment extends Pivot
     use HasUlids;
     use HasUserStamps;
 
-    public $dateFormat = 'U';
+    protected const string TABLE_NAME = 'invoice_payments';
+    protected const string DATE_FORMAT = 'U';
 
-    protected $table = 'invoice_payments';
+    public $dateFormat = self::DATE_FORMAT;
+    protected $table = self::TABLE_NAME;
 
-    protected function casts(): array
-    {
-        return [
-            'payment_method' => PaymentMethods::class,
-            'payment_expires_at' => 'datetime',
-            'payment_issued_at' => 'datetime',
-        ];
-    }
+    protected $casts = [
+        'payment_method' => PaymentMethods::class,
+        'payment_expires_at' => 'datetime',
+        'payment_issued_at' => 'datetime',
+    ];
 }
