@@ -153,8 +153,8 @@ jobs:
           
           echo "📦 Updating Satis repository..."
           
-          # Navigate to Satis directory (adjust path if needed)
-          cd /var/www/satis || cd /opt/satis || cd ~/satis
+          # Navigate to Satis directory
+          cd /home/default/satis
           
           # Update Satis with the new package version
           php bin/satis build satis.json public/
