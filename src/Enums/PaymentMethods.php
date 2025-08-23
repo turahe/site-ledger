@@ -10,8 +10,8 @@ namespace Turahe\Ledger\Enums;
  * Supports Indonesian and international payment methods including traditional banking,
  * digital wallets, QRIS payments, and modern fintech solutions.
  *
- * @package Turahe\Ledger\Enums
  * @author  Nur Wachid <wachid@outlook.com>
+ *
  * @since   1.0.0
  */
 enum PaymentMethods: string
@@ -101,7 +101,7 @@ enum PaymentMethods: string
      * Returns an array of payment methods that belong to the specified category.
      * Useful for filtering payment options in forms or payment processing.
      *
-     * @param string $category The payment method category ('qris', 'virtual_account', 'e_wallet', 'bank_transfer', 'credit_card', 'convenience_store')
+     * @param  string  $category  The payment method category ('qris', 'virtual_account', 'e_wallet', 'bank_transfer', 'credit_card', 'convenience_store')
      * @return array<self> Array of payment methods in the specified category
      *
      * @example

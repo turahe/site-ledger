@@ -28,17 +28,23 @@
     "autoload": {
         "psr-4": {
             "Turahe\\Ledger\\": "src/"
-
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Turahe\\Ledger\\Tests\\": "tests/",
-            "Turahe\\Ledger\\Database\\Factories\\": "database/factories"
+            "Turahe\\Ledger\\Database\\Factories\\": "database/factories",
+            "Turahe\\Ledger\\Tests\\": "tests/"
         }
     },
     "config": {
         "sort-packages": true
+    },
+    "scripts": {
+        "pint": "vendor/bin/pint --preserve-comments",
+        "pint:check": "vendor/bin/pint --test --preserve-comments",
+        "test": "vendor/bin/phpunit --testdox",
+        "test:coverage": "vendor/bin/phpunit --coverage-html coverage --testdox",
+        "test:coverage:clover": "vendor/bin/phpunit --coverage-clover=coverage.clover --testdox"
     },
     "extra": {
         "laravel": {

@@ -8,8 +8,8 @@ namespace Turahe\Ledger\Enums;
  * Defines the types of ledger entries for double-entry bookkeeping and cash flow tracking.
  * Used to maintain accurate financial records and balance calculations.
  *
- * @package Turahe\Ledger\Enums
  * @author  Nur Wachid <wachid@outlook.com>
+ *
  * @since   1.0.0
  */
 enum RecordEntry: string
@@ -113,7 +113,7 @@ enum RecordEntry: string
     /**
      * Check if this entry type increases the account balance
      *
-     * @param string $accountType The account type ('asset', 'liability', 'equity', 'revenue', 'expense')
+     * @param  string  $accountType  The account type ('asset', 'liability', 'equity', 'revenue', 'expense')
      * @return bool True if the entry increases the account balance
      */
     public function increasesBalance(string $accountType): bool

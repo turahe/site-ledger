@@ -7,12 +7,12 @@ namespace Turahe\Ledger\Models\Contracts;
  *
  * Defines the contract that all ledger models must implement.
  * Ensures consistency across Invoice, Voucher, and other ledger entities.
- * 
+ *
  * This interface standardizes the basic methods that all ledger models should provide,
  * enabling polymorphic behavior and consistent API usage across the package.
  *
- * @package Turahe\Ledger\Models\Contracts
  * @author  Nur Wachid <wachid@outlook.com>
+ *
  * @since   1.0.0
  */
 interface LedgerModelInterface
@@ -69,8 +69,7 @@ interface LedgerModelInterface
     /**
      * Set the model's metadata
      *
-     * @param object $metadata The metadata object to set
-     * @return void
+     * @param  object  $metadata  The metadata object to set
      */
     public function setMetadata(object $metadata): void;
 

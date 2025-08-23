@@ -8,8 +8,8 @@ namespace Turahe\Ledger\Enums;
  * Defines the types of financial transactions that can be recorded in the ledger system.
  * Used for categorizing money movements and financial operations.
  *
- * @package Turahe\Ledger\Enums
  * @author  Nur Wachid <wachid@outlook.com>
+ *
  * @since   1.0.0
  */
 enum Transaction: string

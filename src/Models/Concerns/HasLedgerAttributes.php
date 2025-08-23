@@ -17,8 +17,8 @@ use Illuminate\Database\Eloquent\Builder;
  * - Safe metadata handling
  * - Common status checking methods
  *
- * @package Turahe\Ledger\Models\Concerns
  * @author  Nur Wachid <wachid@outlook.com>
+ *
  * @since   1.0.0
  */
 trait HasLedgerAttributes
@@ -28,8 +28,8 @@ trait HasLedgerAttributes
      *
      * Filters records based on the polymorphic model_type field.
      *
-     * @param Builder $query The query builder instance
-     * @param string $modelType The model class name to filter by
+     * @param  Builder  $query  The query builder instance
+     * @param  string  $modelType  The model class name to filter by
      * @return Builder The modified query builder
      *
      * @example
@@ -47,8 +47,8 @@ trait HasLedgerAttributes
      *
      * Filters records based on the polymorphic model_id field.
      *
-     * @param Builder $query The query builder instance
-     * @param string $modelId The model ID to filter by
+     * @param  Builder  $query  The query builder instance
+     * @param  string  $modelId  The model ID to filter by
      * @return Builder The modified query builder
      *
      * @example
@@ -66,8 +66,8 @@ trait HasLedgerAttributes
      *
      * Filters records by their unique business code.
      *
-     * @param Builder $query The query builder instance
-     * @param string $code The code to filter by
+     * @param  Builder  $query  The query builder instance
+     * @param  string  $code  The code to filter by
      * @return Builder The modified query builder
      *
      * @example
@@ -85,10 +85,10 @@ trait HasLedgerAttributes
      *
      * Filters records within a specified date range for any date field.
      *
-     * @param Builder $query The query builder instance
-     * @param string $dateField The date field name to filter on
-     * @param mixed $startDate The start date
-     * @param mixed $endDate The end date
+     * @param  Builder  $query  The query builder instance
+     * @param  string  $dateField  The date field name to filter on
+     * @param  mixed  $startDate  The start date
+     * @param  mixed  $endDate  The end date
      * @return Builder The modified query builder
      *
      * @example
@@ -106,8 +106,8 @@ trait HasLedgerAttributes
      *
      * Filters records by their current status.
      *
-     * @param Builder $query The query builder instance
-     * @param string $status The status to filter by
+     * @param  Builder  $query  The query builder instance
+     * @param  string  $status  The status to filter by
      * @return Builder The modified query builder
      *
      * @example
@@ -125,8 +125,8 @@ trait HasLedgerAttributes
      *
      * Formats a monetary amount with currency symbol and proper number formatting.
      *
-     * @param string $field The field name containing the amount
-     * @param string $currency The currency code (default: 'IDR')
+     * @param  string  $field  The field name containing the amount
+     * @param  string  $currency  The currency code (default: 'IDR')
      * @return string The formatted amount string
      *
      * @example
@@ -161,8 +161,8 @@ trait HasLedgerAttributes
      *
      * Safely retrieves a value from the metadata object without throwing errors.
      *
-     * @param string $key The metadata key to retrieve
-     * @param mixed $default The default value if key is not found
+     * @param  string  $key  The metadata key to retrieve
+     * @param  mixed  $default  The default value if key is not found
      * @return mixed The metadata value or default
      *
      * @example
@@ -185,9 +185,8 @@ trait HasLedgerAttributes
      *
      * Safely sets a value in the metadata object, creating the object if it doesn't exist.
      *
-     * @param string $key The metadata key to set
-     * @param mixed $value The value to set
-     * @return void
+     * @param  string  $key  The metadata key to set
+     * @param  mixed  $value  The value to set
      *
      * @example
      * ```php

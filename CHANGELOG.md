@@ -5,6 +5,54 @@ All notable changes to the Turahe Ledger package will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.2] - 2025-12-19
+
+### 🧪 Test Coverage & Code Quality Release
+
+#### ✨ Added
+- **Comprehensive Test Suite**: Added extensive test coverage for core components
+  - `RecordEntryTest` with 29 test methods covering all enum functionality
+  - `TransactionTest` with 11 test methods covering all enum functionality
+  - `LedgerServiceTest` for service structure verification
+  - `LedgerExceptionTest` for exception handling and instantiation
+  - `VoucherItemTest` for model structure and trait verification
+
+- **Code Coverage Tools**: Integrated Xdebug for detailed coverage reporting
+  - HTML coverage reports in `coverage/` directory
+  - Clover coverage reports for CI/CD integration
+  - Coverage analysis for identifying untested code areas
+
+- **Composer Scripts**: Enhanced development workflow with convenient commands
+  - `composer pint` - Run Laravel Pint code formatting
+  - `composer pint:check` - Check code formatting without changes
+  - `composer test:coverage` - Generate HTML coverage reports
+  - `composer test:coverage:clover` - Generate Clover coverage reports
+
+#### 🔧 Enhanced
+- **Test Infrastructure**: Improved test setup and organization
+- **Code Quality**: Applied Laravel Pint formatting across codebase
+- **Developer Experience**: Streamlined testing and formatting workflows
+
+#### 📊 Metrics
+- **Test Coverage**: Improved from 30.60% to 40.06% (+9.46%)
+- **Test Count**: Increased from 20 to 77 tests (+57 new tests)
+- **Assertions**: Increased from 68 to 152 (+84 new assertions)
+- **Files Tested**: Added coverage for 5 previously untested components
+
+#### 🐛 Fixed
+- **Test Dependencies**: Resolved Laravel configuration issues in unit tests
+- **Code Formatting**: Consistent code style across entire codebase
+
+### Breaking Changes
+- None in this release
+
+### Deprecations
+- None in this release
+
+### Migration Guide
+- No database migrations required
+- Update to latest version for enhanced test coverage and code quality
+
 ## [Unreleased]
 
 ### Planned

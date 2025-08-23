@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Schema;
  * - invoices: Main invoice table with fee structure, payment tracking, and status management
  * - invoice_items: Individual items within invoices with detailed pricing and fee breakdowns
  *
- * @package Turahe\Ledger\Database\Migrations
  * @author  Nur Wachid <wachid@outlook.com>
+ *
  * @since   1.0.0
  */
 return new class extends Migration
@@ -25,8 +25,6 @@ return new class extends Migration
      *
      * Creates the invoices and invoice_items tables with proper structure,
      * indexes, foreign key constraints, and comprehensive fee tracking.
-     *
-     * @return void
      */
     public function up(): void
     {

@@ -44,8 +44,8 @@ use Turahe\UserStamps\Concerns\HasUserStamps;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  *
- * @package Turahe\Ledger\Models
  * @author  Nur Wachid <wachid@outlook.com>
+ *
  * @since   1.0.0
  */
 class Voucher extends Model implements LedgerModelInterface
@@ -275,8 +275,7 @@ class Voucher extends Model implements LedgerModelInterface
     /**
      * Set the voucher's metadata
      *
-     * @param object $metadata The metadata object to set
-     * @return void
+     * @param  object  $metadata  The metadata object to set
      */
     public function setMetadata(object $metadata): void
     {

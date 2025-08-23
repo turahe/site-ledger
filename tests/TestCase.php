@@ -19,8 +19,8 @@ use Turahe\Ledger\Tests\Models\Organization;
  * - Package service provider registration
  * - UserStamps configuration
  *
- * @package Turahe\Ledger\Tests
  * @author  Nur Wachid <wachid@outlook.com>
+ *
  * @since   1.0.0
  */
 class TestCase extends \Orchestra\Testbench\TestCase
@@ -32,8 +32,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
      * Set up the test environment
      *
      * Loads migrations and sets up the test database with sample data.
-     *
-     * @return void
      */
     protected function setUp(): void
     {
@@ -48,7 +46,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
      * Registers the necessary service providers for the ledger package
      * and UserStamps functionality.
      *
-     * @param mixed $app The application instance
+     * @param  mixed  $app  The application instance
      * @return array Array of service provider classes
      */
     protected function getPackageProviders($app)
@@ -65,7 +63,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
      * Configures the test environment with SQLite database, ULID support,
      * and ledger package settings.
      *
-     * @param \Illuminate\Foundation\Application $app The application instance
+     * @param  \Illuminate\Foundation\Application  $app  The application instance
      * @return void
      */
     protected function getEnvironmentSetUp($app)
@@ -88,7 +86,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
      * Creates necessary tables and inserts sample data for testing,
      * including users, organizations, products, and currencies.
      *
-     * @param mixed $app The application instance
+     * @param  mixed  $app  The application instance
      * @return void
      */
     protected function setUpDatabase($app)

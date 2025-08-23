@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Schema;
  * - vouchers: Main voucher table with expiration, status, and currency support
  * - voucher_items: Individual items within vouchers with pricing and descriptions
  *
- * @package Turahe\Ledger\Database\Migrations
  * @author  Nur Wachid <wachid@outlook.com>
+ *
  * @since   1.0.0
  */
 return new class extends Migration
@@ -25,8 +25,6 @@ return new class extends Migration
      *
      * Creates the vouchers and voucher_items tables with proper structure,
      * indexes, and foreign key constraints.
-     *
-     * @return void
      */
     public function up(): void
     {
@@ -173,8 +171,6 @@ return new class extends Migration
      *
      * Drops the voucher_items and vouchers tables in the correct order
      * to respect foreign key constraints.
-     *
-     * @return void
      */
     public function down(): void
     {

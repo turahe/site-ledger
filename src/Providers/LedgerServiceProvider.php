@@ -17,8 +17,8 @@ use Turahe\Ledger\Services\LedgerService;
  * - Service registration and binding
  * - Console command registration
  *
- * @package Turahe\Ledger\Providers
  * @author  Nur Wachid <wachid@outlook.com>
+ *
  * @since   1.0.0
  */
 class LedgerServiceProvider extends ServiceProvider
@@ -28,8 +28,6 @@ class LedgerServiceProvider extends ServiceProvider
      *
      * Called during the service container binding phase.
      * Registers configuration and core services.
-     *
-     * @return void
      */
     public function register(): void
     {
@@ -42,8 +40,6 @@ class LedgerServiceProvider extends ServiceProvider
      *
      * Called after all services are registered.
      * Loads migrations and publishes configuration files.
-     *
-     * @return void
      */
     public function boot(): void
     {
@@ -61,8 +57,6 @@ class LedgerServiceProvider extends ServiceProvider
      *
      * Merges the package configuration with the application's config.
      * Allows users to override default settings.
-     *
-     * @return void
      */
     protected function registerConfig(): void
     {
@@ -74,8 +68,6 @@ class LedgerServiceProvider extends ServiceProvider
      *
      * Binds the LedgerService as a singleton and creates an alias
      * for easy access throughout the application.
-     *
-     * @return void
      */
     protected function registerServices(): void
     {

@@ -34,8 +34,8 @@ use Turahe\UserStamps\Concerns\HasUserStamps;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  *
- * @package Turahe\Ledger\Models\Voucher
  * @author  Nur Wachid <wachid@outlook.com>
+ *
  * @since   1.0.0
  */
 class Item extends Model

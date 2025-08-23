@@ -23,8 +23,8 @@ use Turahe\Ledger\Models\Voucher;
  * This service encapsulates all business logic to ensure consistency
  * and maintainability across the ledger system.
  *
- * @package Turahe\Ledger\Services
  * @author  Nur Wachid <wachid@outlook.com>
+ *
  * @since   1.0.0
  */
 class LedgerService
@@ -35,7 +35,7 @@ class LedgerService
      * Creates an invoice with the provided data and sets a default status
      * if none is specified.
      *
-     * @param array $data Invoice data including model_id, model_type, code, amounts, etc.
+     * @param  array  $data  Invoice data including model_id, model_type, code, amounts, etc.
      * @return Invoice The created invoice instance
      *
      * @example
@@ -96,7 +96,18 @@ class LedgerService
     }
 
     /**
-     * Update invoice totals based on payments
+     * Update the total payment and unpaid amount for the given invoice.
+     *
+     * This method recalculates the total amount paid towards the invoice by summing all related payment records,
+     * and updates the invoice's 'total_payment' and 'total_unpaid' fields accordingly.
+     * If the total payments exceed the invoice amount, the unpaid amount is set to zero.
+     *
+     * @param  Invoice  $invoice  The invoice instance to update
+     *
+     * @example
+     * ```php
+     * $ledgerService->updateInvoiceTotals($invoice);
+     * ```
      */
     public function updateInvoiceTotals(Invoice $invoice): void
     {
