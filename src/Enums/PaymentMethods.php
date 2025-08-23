@@ -5,7 +5,14 @@ namespace Turahe\Ledger\Enums;
 /**
  * Payment Methods Enum
  *
- * Groups payment methods by category for better organization and maintenance
+ * Comprehensive enum defining all supported payment methods in the ledger system.
+ * Groups payment methods by category for better organization and maintenance.
+ * Supports Indonesian and international payment methods including traditional banking,
+ * digital wallets, QRIS payments, and modern fintech solutions.
+ *
+ * @package Turahe\Ledger\Enums
+ * @author  Nur Wachid <wachid@outlook.com>
+ * @since   1.0.0
  */
 enum PaymentMethods: string
 {
@@ -90,6 +97,18 @@ enum PaymentMethods: string
 
     /**
      * Get payment methods by category
+     *
+     * Returns an array of payment methods that belong to the specified category.
+     * Useful for filtering payment options in forms or payment processing.
+     *
+     * @param string $category The payment method category ('qris', 'virtual_account', 'e_wallet', 'bank_transfer', 'credit_card', 'convenience_store')
+     * @return array<self> Array of payment methods in the specified category
+     *
+     * @example
+     * ```php
+     * $qrisMethods = PaymentMethods::getByCategory('qris');
+     * $eWallets = PaymentMethods::getByCategory('e_wallet');
+     * ```
      */
     public static function getByCategory(string $category): array
     {
@@ -128,6 +147,11 @@ enum PaymentMethods: string
 
     /**
      * Check if payment method is digital
+     *
+     * Determines whether the payment method is digital (electronic) or physical.
+     * Non-digital methods require physical handling (cash, cheques, giro).
+     *
+     * @return bool True if the payment method is digital, false for physical methods
      */
     public function isDigital(): bool
     {
@@ -136,6 +160,11 @@ enum PaymentMethods: string
 
     /**
      * Check if payment method is instant
+     *
+     * Determines whether the payment method provides instant settlement/confirmation.
+     * Instant methods typically settle immediately or within seconds.
+     *
+     * @return bool True if the payment method provides instant settlement, false otherwise
      */
     public function isInstant(): bool
     {

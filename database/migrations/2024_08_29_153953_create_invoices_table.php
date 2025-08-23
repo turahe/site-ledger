@@ -4,10 +4,29 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * Create Invoices and Invoice Items Tables Migration
+ *
+ * Creates the invoices and invoice_items tables for the ledger system.
+ * Supports comprehensive billing with fees, discounts, taxes, and payment tracking.
+ *
+ * Tables Created:
+ * - invoices: Main invoice table with fee structure, payment tracking, and status management
+ * - invoice_items: Individual items within invoices with detailed pricing and fee breakdowns
+ *
+ * @package Turahe\Ledger\Database\Migrations
+ * @author  Nur Wachid <wachid@outlook.com>
+ * @since   1.0.0
+ */
 return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * Creates the invoices and invoice_items tables with proper structure,
+     * indexes, foreign key constraints, and comprehensive fee tracking.
+     *
+     * @return void
      */
     public function up(): void
     {

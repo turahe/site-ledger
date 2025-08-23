@@ -1,0 +1,26 @@
+{
+    "preset": "laravel",
+    "finder": {
+        "exclude": [
+            "vendor",
+            "node_modules",
+            "storage",
+            "bootstrap/cache"
+        ],
+        "in": [
+            "app",
+            "config",
+            "database",
+            "resources",
+            "routes",
+            "src",
+            "tests"
+        ],
+        "name": [
+            "*.php"
+        ],
+        "not_name": [
+            "*.blade.php"
+        ]
+    }
+}

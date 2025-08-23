@@ -6,10 +6,48 @@ use Turahe\Ledger\Models\Invoice;
 use Turahe\Ledger\Models\Invoice\Payment;
 use Turahe\Ledger\Models\Voucher;
 
+/**
+ * Ledger Service
+ *
+ * Core business logic service for ledger operations including invoice management,
+ * voucher handling, payment processing, and financial calculations.
+ *
+ * Features:
+ * - Invoice creation and management
+ * - Voucher creation and validation
+ * - Payment processing and validation
+ * - Financial calculations and updates
+ * - Status management and business rules
+ * - Query methods for common operations
+ *
+ * This service encapsulates all business logic to ensure consistency
+ * and maintainability across the ledger system.
+ *
+ * @package Turahe\Ledger\Services
+ * @author  Nur Wachid <wachid@outlook.com>
+ * @since   1.0.0
+ */
 class LedgerService
 {
     /**
      * Create a new invoice
+     *
+     * Creates an invoice with the provided data and sets a default status
+     * if none is specified.
+     *
+     * @param array $data Invoice data including model_id, model_type, code, amounts, etc.
+     * @return Invoice The created invoice instance
+     *
+     * @example
+     * ```php
+     * $invoice = $ledgerService->createInvoice([
+     *     'model_id' => $user->id,
+     *     'model_type' => User::class,
+     *     'code' => 'INV-001',
+     *     'total_invoice' => 1000.00,
+     *     'currency' => 'IDR'
+     * ]);
+     * ```
      */
     public function createInvoice(array $data): Invoice
     {
