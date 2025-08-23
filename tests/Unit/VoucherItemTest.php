@@ -22,7 +22,7 @@ class VoucherItemTest extends TestCase
         $reflection = new \ReflectionClass(Item::class);
         $property = $reflection->getProperty('table');
         $property->setAccessible(true);
-        
+
         $this->assertEquals('voucher_items', $property->getDefaultValue());
     }
 
@@ -31,7 +31,7 @@ class VoucherItemTest extends TestCase
         $reflection = new \ReflectionClass(Item::class);
         $property = $reflection->getProperty('fillable');
         $property->setAccessible(true);
-        
+
         $expectedFillable = [
             'model_id',
             'model_type',
@@ -63,12 +63,12 @@ class VoucherItemTest extends TestCase
     public function test_voucher_item_uses_required_traits(): void
     {
         $traits = class_uses(Item::class);
-        
+
         $this->assertTrue(in_array(
             'Turahe\Core\Concerns\HasConfigurablePrimaryKey',
             $traits
         ));
-        
+
         $this->assertTrue(in_array(
             'Turahe\UserStamps\Concerns\HasUserStamps',
             $traits

@@ -12,7 +12,7 @@ class LedgerServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->ledgerService = new LedgerService();
+        $this->ledgerService = new LedgerService;
     }
 
     public function test_ledger_service_can_be_instantiated(): void

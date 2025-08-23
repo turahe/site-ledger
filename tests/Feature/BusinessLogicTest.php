@@ -1,6 +1,6 @@
 <?php
 
-namespace Turahe\Ledger\Tests\Unit;
+namespace Turahe\Ledger\Tests\Feature;
 
 use PHPUnit\Framework\Attributes\Test;
 use Turahe\Ledger\Enums\PaymentMethods;

@@ -10,7 +10,7 @@ class LedgerExceptionTest extends TestCase
     public function test_ledger_exception_can_be_instantiated(): void
     {
         $exception = new LedgerException('Test error message');
-        
+
         $this->assertInstanceOf(LedgerException::class, $exception);
         $this->assertInstanceOf(\Exception::class, $exception);
     }
@@ -19,14 +19,14 @@ class LedgerExceptionTest extends TestCase
     {
         $message = 'Custom error message for ledger';
         $exception = new LedgerException($message);
-        
+
         $this->assertEquals($message, $exception->getMessage());
     }
 
     public function test_ledger_exception_has_default_code(): void
     {
         $exception = new LedgerException('Test message');
-        
+
         $this->assertEquals(0, $exception->getCode());
     }
 
@@ -34,7 +34,7 @@ class LedgerExceptionTest extends TestCase
     {
         $code = 500;
         $exception = new LedgerException('Test message', $code);
-        
+
         $this->assertEquals($code, $exception->getCode());
     }
 
@@ -42,7 +42,7 @@ class LedgerExceptionTest extends TestCase
     {
         $this->expectException(LedgerException::class);
         $this->expectExceptionMessage('Exception should be thrown');
-        
+
         throw new LedgerException('Exception should be thrown');
     }
 }
