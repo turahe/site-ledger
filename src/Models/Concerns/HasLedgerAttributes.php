@@ -93,7 +93,7 @@ trait HasLedgerAttributes
      *
      * @example
      * ```php
-     * Invoice::byDateRange('created_at', '2024-01-01', '2024-12-31')->get();
+     * Invoice::byDateRange('created_at', '2025-01-01', '2025-12-31')->get();
      * ```
      */
     public function scopeByDateRange(Builder $query, string $dateField, $startDate, $endDate): Builder

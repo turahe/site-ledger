@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Multi-currency support improvements
 - API rate limiting and caching
 
-## [1.3.0] - 2024-12-19
+## [1.3.0] - 2025-12-19
 
 ### 🎉 Major Release - Comprehensive Documentation & Code Quality
 
@@ -76,7 +76,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - No database migrations required for existing installations
 - Update to latest version for enhanced features and documentation
 
-## [1.2.0] - 2024-12-18
+## [1.2.0] - 2025-12-18
 
 ### ✨ Added
 - **Business Logic Methods**: Added comprehensive business logic to all models
@@ -96,7 +96,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Test Coverage**: Improved test suite with comprehensive test cases
 - **Code Quality**: Applied Laravel Pint code style fixes
 
-## [1.1.0] - 2024-12-17
+## [1.1.0] - 2025-12-17
 
 ### ✨ Added
 - **PHP 8.4 Support**: Full compatibility with latest PHP version
@@ -109,7 +109,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Database Migrations**: Enhanced table structures with proper constraints
 - **Test Infrastructure**: Improved test setup and data factories
 
-## [1.0.0] - 2024-12-16
+## [1.0.0] - 2025-12-16
 
 ### 🎉 Initial Release
 

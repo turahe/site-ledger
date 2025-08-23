@@ -1,6 +1,6 @@
 # Release Notes - Turahe Ledger v1.3.0
 
-**Release Date**: December 19, 2024  
+**Release Date**: December 19, 2025  
 **Version**: 1.3.0  
 **Codename**: "Documentation & Quality"
 
