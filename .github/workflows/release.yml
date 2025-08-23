@@ -147,25 +147,41 @@ jobs:
       run: |
         echo "🔄 Updating private Satis repository on 178.128.84.149..."
         
-        # SSH into the server and update Satis
+        # SSH into the server and run generate.sh script
         ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
           root@178.128.84.149 << 'EOF'
           
-          echo "📦 Updating Satis repository..."
+          echo "📦 Running Satis generate.sh script..."
           
           # Navigate to Satis directory
           cd /home/default/satis
           
-          # Update Satis with the new package version
-          php bin/satis build satis.json public/
-          
-          # Clear any caches if needed
-          if [ -f "public/clear-cache.sh" ]; then
-            chmod +x public/clear-cache.sh
-            ./public/clear-cache.sh
+          # Check if generate.sh exists and is executable
+          if [ -f "generate.sh" ]; then
+            echo "✅ Found generate.sh script"
+            
+            # Make sure it's executable
+            chmod +x generate.sh
+            
+            # Run the generate script
+            ./generate.sh
+            
+            echo "✅ Satis repository updated successfully using generate.sh!"
+          else
+            echo "⚠️ generate.sh not found, falling back to manual Satis build"
+            
+            # Fallback to manual Satis build
+            php bin/satis build satis.json public/
+            
+            # Clear any caches if needed
+            if [ -f "public/clear-cache.sh" ]; then
+              chmod +x public/clear-cache.sh
+              ./public/clear-cache.sh
+            fi
+            
+            echo "✅ Satis repository updated successfully using manual build!"
           fi
           
-          echo "✅ Satis repository updated successfully!"
           echo "📊 Package ${{ steps.get_version.outputs.version }} is now available"
         EOF
         
