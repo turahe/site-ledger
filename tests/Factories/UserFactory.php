@@ -13,7 +13,6 @@ class UserFactory extends Factory
     {
         return [
             'username' => $this->faker->userName(),
-            'email' => $this->faker->unique()->safeEmail(),
         ];
     }
 }

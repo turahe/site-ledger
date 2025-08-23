@@ -4,7 +4,6 @@ namespace Turahe\Ledger\Enums;
 
 enum Transaction: string
 {
-    const Deposit = 'DEPOSIT';
-
-    const Withdraw = 'WITHDRAW';
+    case Deposit = 'DEPOSIT';
+    case Withdraw = 'WITHDRAW';
 }

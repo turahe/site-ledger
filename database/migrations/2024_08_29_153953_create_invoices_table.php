@@ -12,22 +12,31 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('invoices', function (Blueprint $table) {
-            $table->ulid('id')->primary();
-            $table->ulidMorphs('model');
+            if (config('userstamps.users_table_column_type') === 'ulid') {
+                $table->ulid('id')->primary();
+                $table->ulidMorphs('model');
+                $table->ulid('shipping_provider_id')->index()->nullable();
+                $table->ulid('insurance_provider_id')->index()->nullable();
+            }
+            if (config('userstamps.users_table_column_type') === 'bigIncrements') {
+                $table->id();
+                $table->morphs('model');
+                $table->unsignedBigInteger('shipping_provider_id')->index()->nullable();
+                $table->unsignedBigInteger('insurance_provider_id')->index()->nullable();
+            }
+            if (config('userstamps.users_table_column_type') === 'uuid') {
+                $table->uuid('id')->primary();
+                $table->uuidMorphs('model');
+                $table->uuid('shipping_provider_id')->index()->nullable();
+                $table->uuid('insurance_provider_id')->index()->nullable();
+            }
             $table->string('code')->unique()->index();
-            $table->foreignIdFor(config('ledger.shipping_provider', \App\Models\Organization::class), 'shipping_provider_id')->index()->nullable();
             $table->float('shipping_fee')->default(0);
-            $table->foreignIdFor(config('ledger.insurance_provider', \App\Models\Organization::class), 'insurance_provider_id')->index()->nullable();
             $table->float('insurance_fee')->default(0);
             $table->float('transaction_fee')->default(0);
             $table->string('discount_voucher')->nullable();
             $table->float('discount_amount')->default(0);
-
             $table->string('currency')->default('IDR')->index();
-            $table->foreign('currency')
-                ->references('iso_code')
-                ->on('tm_currencies');
-
             $table->integer('issue_date')->nullable();
             $table->integer('due_date')->nullable();
             $table->decimal('tax_amount', 64, 4)->comment('amount is an decimal, it could be "dollars" or "cents"')->default(0);
@@ -39,41 +48,73 @@ return new class extends Migration
             $table->decimal('total_unpaid', 64, 4)->comment('amount is an decimal, it could be "dollars" or "cents"')->default(0);
             $table->decimal('total_change', 64, 4)->comment('amount is an decimal, it could be "dollars" or "cents"')->default(0);
             $table->decimal('minimum_down_payment', 64, 4)->comment('amount is an decimal, it could be "dollars" or "cents"')->default(0);
+            $table->string('status')->default('draft');
 
-            $table->foreignUlid('created_by')
-                ->index()
-                ->nullable()
-                ->constrained('users')
-                ->cascadeOnDelete();
-            $table->foreignUlid('updated_by')
-                ->index()
-                ->nullable()
-                ->constrained('users')
-                ->cascadeOnDelete();
+            // Create userstamp columns with correct data types
+            if (config('userstamps.users_table_column_type') === 'bigincrements') {
+                $table->unsignedBigInteger('created_by')->nullable()->index();
+                $table->unsignedBigInteger('updated_by')->nullable()->index();
+                $table->unsignedBigInteger('deleted_by')->nullable()->index();
+            }
+            if (config('userstamps.users_table_column_type') === 'ulid') {
+                $table->ulid('created_by')->nullable()->index();
+                $table->ulid('updated_by')->nullable()->index();
+                $table->ulid('deleted_by')->nullable()->index();
+            }
+            if (config('userstamps.users_table_column_type') === 'uuid') {
+                $table->uuid('created_by')->nullable()->index();
+                $table->uuid('updated_by')->nullable()->index();
+                $table->uuid('deleted_by')->nullable()->index();
+            }
 
-            if (config('core.table.use_timestamps')) {
-                $table->timestamps();
-                $table->softDeletes();
-            } else {
-                $table->integer('created_at')->index()->nullable();
-                $table->integer('updated_at')->index()->nullable();
-                $table->integer('deleted_at')->index()->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+
+            // Add foreign key constraints for userstamps
+            if (config('userstamps.users_table_column_type') === 'bigincrements') {
+                $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
+                $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
+                $table->foreign('deleted_by')->references('id')->on('users')->onDelete('set null');
+            }
+            if (config('userstamps.users_table_column_type') === 'ulid') {
+                $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
+                $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
+                $table->foreign('deleted_by')->references('id')->on('users')->onDelete('set null');
+            }
+            if (config('userstamps.users_table_column_type') === 'uuid') {
+                $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
+                $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
+                $table->foreign('deleted_by')->references('id')->on('users')->onDelete('set null');
             }
 
             $table->index('id', 'invoice_id_idx', 'hash');
-
         });
 
         Schema::create('invoice_items', function (Blueprint $table) {
-            $table->ulid('id')->primary();
-            $table->foreignIdFor(\Turahe\Ledger\Models\Invoice::class, 'invoice_id')->index();
-
-            $table->ulidMorphs('model');
+            if (config('userstamps.users_table_column_type') === 'ulid') {
+                $table->ulid('id')->primary();
+                $table->ulidMorphs('model');
+                $table->ulid('invoice_id')->index();
+                $table->ulid('shipping_provider_id')->index()->nullable();
+                $table->ulid('insurance_provider_id')->index()->nullable();
+            }
+            if (config('userstamps.users_table_column_type') === 'bigIncrements') {
+                $table->id();
+                $table->morphs('model');
+                $table->unsignedBigInteger('invoice_id')->index();
+                $table->unsignedBigInteger('shipping_provider_id')->index()->nullable();
+                $table->unsignedBigInteger('insurance_provider_id')->index()->nullable();
+            }
+            if (config('userstamps.users_table_column_type') === 'uuid') {
+                $table->uuid('id')->primary();
+                $table->uuidMorphs('model');
+                $table->uuid('invoice_id')->index();
+                $table->uuid('shipping_provider_id')->index()->nullable();
+                $table->uuid('insurance_provider_id')->index()->nullable();
+            }
             $table->decimal('quantity', 64)->default(1);
             $table->string('unit')->nullable();
-            $table->foreignIdFor(config('ledger.shipping_provider', \App\Models\Organization::class), 'shipping_provider_id')->index()->nullable();
             $table->float('shipping_fee')->default(0);
-            $table->foreignIdFor(config('ledger.insurance_provider', \App\Models\Organization::class), 'insurance_provider_id')->index()->nullable();
             $table->float('insurance_fee')->default(0);
             $table->float('transaction_fee')->default(0);
             $table->string('discount_voucher')->nullable();
@@ -81,41 +122,61 @@ return new class extends Migration
             $table->decimal('tax_amount', 64, 4)->comment('amount is an decimal, it could be "dollars" or "cents"')->default(0);
             $table->decimal('service_amount', 64, 4)->comment('amount is an decimal, it could be "dollars" or "cents"')->default(0);
             $table->decimal('mdr_fee', 64, 4)->comment('amount is an decimal, it could be "dollars" or "cents"')->default(0);
-
             $table->string('currency')->default('IDR')->index();
-            $table->foreign('currency')
-                ->references('iso_code')
-                ->on('tm_currencies')
-                ->cascadeOnDelete()
-                ->cascadeOnUpdate();
-
             $table->float('price_unit');
 
-            $table->foreignUlid('created_by')
-                ->index()
-                ->nullable()
-                ->constrained('users')
-                ->cascadeOnDelete();
-            $table->foreignUlid('updated_by')
-                ->index()
-                ->nullable()
-                ->constrained('users')
-                ->cascadeOnDelete();
+            // Create userstamp columns with correct data types
+            if (config('userstamps.users_table_column_type') === 'bigincrements') {
+                $table->unsignedBigInteger('created_by')->nullable()->index();
+                $table->unsignedBigInteger('updated_by')->nullable()->index();
+                $table->unsignedBigInteger('deleted_by')->nullable()->index();
+            }
+            if (config('userstamps.users_table_column_type') === 'ulid') {
+                $table->ulid('created_by')->nullable()->index();
+                $table->ulid('updated_by')->nullable()->index();
+                $table->ulid('deleted_by')->nullable()->index();
+            }
+            if (config('userstamps.users_table_column_type') === 'uuid') {
+                $table->uuid('created_by')->nullable()->index();
+                $table->uuid('updated_by')->nullable()->index();
+                $table->uuid('deleted_by')->nullable()->index();
+            }
 
-            if (config('core.table.use_timestamps')) {
-                $table->timestamps();
-                $table->softDeletes();
-            } else {
-                $table->integer('created_at')->index()->nullable();
-                $table->integer('updated_at')->index()->nullable();
-                $table->integer('deleted_at')->index()->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+
+            // Add foreign key constraints for userstamps
+            if (config('userstamps.users_table_column_type') === 'bigincrements') {
+                $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
+                $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
+                $table->foreign('deleted_by')->references('id')->on('users')->onDelete('set null');
+            }
+            if (config('userstamps.users_table_column_type') === 'ulid') {
+                $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
+                $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
+                $table->foreign('deleted_by')->references('id')->on('users')->onDelete('set null');
+            }
+            if (config('userstamps.users_table_column_type') === 'uuid') {
+                $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
+                $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
+                $table->foreign('deleted_by')->references('id')->on('users')->onDelete('set null');
             }
 
             $table->index('id', 'invoice_items_id_idx', 'hash');
             $table->index('model_id', 'invoice_items_model_id_idx', 'hash');
             $table->index('model_type', 'invoice_items_model_type_idx', 'hash');
-        });
 
+            // Add foreign key constraint for invoice_id
+            if (config('userstamps.users_table_column_type') === 'ulid') {
+                $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
+            }
+            if (config('userstamps.users_table_column_type') === 'bigincrements') {
+                $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
+            }
+            if (config('userstamps.users_table_column_type') === 'uuid') {
+                $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
+            }
+        });
     }
 
     /**

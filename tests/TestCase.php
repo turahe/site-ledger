@@ -49,8 +49,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $app['db.schema']->create('users', function ($table) {
             $table->ulid('id')->primary();
             $table->string('username');
-            $table->string('email')->unique();
-            $table->string('phone')->unique()->nullable();
 
             $table->timestamps();
         });
@@ -59,5 +57,38 @@ class TestCase extends \Orchestra\Testbench\TestCase
             $table->ulid('id')->primary();
             $table->timestamps();
         });
+        $app['db.schema']->create('organizations', function ($table) {
+            $table->ulid('id')->primary();
+            $table->timestamps();
+        });
+
+        $app['db.schema']->create('tm_currencies', function ($table) {
+            $table->string('iso_code')->primary();
+            $table->string('name');
+            $table->timestamps();
+        });
+
+        // Insert sample currency data
+        $app['db']->table('tm_currencies')->insert([
+            'iso_code' => 'IDR',
+            'name' => 'Indonesian Rupiah',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // Insert sample user data
+        $app['db']->table('users')->insert([
+            'id' => '01HXYZ123456789ABCDEFGHIJ',
+            'username' => 'testuser',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // Insert sample organization data
+        $app['db']->table('organizations')->insert([
+            'id' => '01HXYZ123456789ABCDEFGHIK',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }
