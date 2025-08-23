@@ -1,7 +1,6 @@
 {
     "name": "turahe/ledger",
     "description": "A ledger management system for handling vouchers and invoices.",
-    "version": "1.3.0",
     "license": "MIT",
     "authors": [
         {
