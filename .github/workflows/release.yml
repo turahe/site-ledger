@@ -85,7 +85,7 @@ jobs:
         chmod 600 ~/.ssh/id_rsa
         
         # Add server to known hosts
-        ssh-keyscan -H 178.128.84.149 >> ~/.ssh/known_hosts
+        ssh-keyscan -H ${{ vars.SATIS_SERVER_IP }} >> ~/.ssh/known_hosts
         
         echo "✅ SSH setup completed!"
 
@@ -145,11 +145,11 @@ jobs:
 
     - name: Update Private Satis Repository
       run: |
-        echo "🔄 Updating private Satis repository on 178.128.84.149..."
+        echo "🔄 Updating private Satis repository on ${{ vars.SATIS_SERVER_IP }}..."
         
         # SSH into the server and run generate.sh script
         ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
-          root@178.128.84.149 << 'EOF'
+          ${{ vars.SATIS_SERVER_USER }}@${{ vars.SATIS_SERVER_IP }} << 'EOF'
           
           echo "📦 Running Satis generate.sh script..."
           
@@ -191,5 +191,5 @@ jobs:
       run: |
         echo "🎉 Release ${{ steps.get_version.outputs.version }} created successfully!"
         echo "📊 Coverage report uploaded as artifact"
-        echo "🔄 Private Satis repository updated on 178.128.84.149"
+        echo "🔄 Private Satis repository updated on ${{ vars.SATIS_SERVER_IP }}"
         echo "🔗 Release URL: https://github.com/${{ github.repository }}/releases/tag/${{ steps.get_version.outputs.version }}"
