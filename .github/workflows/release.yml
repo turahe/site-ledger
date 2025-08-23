@@ -127,15 +127,30 @@ jobs:
         path: coverage/
         retention-days: 30
 
+    - name: Setup SSH for Deploy Key
+      run: |
+        echo "🔑 Setting up SSH with deploy key..."
+        
+        # Create SSH directory
+        mkdir -p ~/.ssh
+        
+        # Add the deploy key (you'll need to add this as a secret)
+        echo "${{ secrets.SATIS_DEPLOY_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        
+        # Add server to known hosts
+        ssh-keyscan -H ${{ vars.SATIS_SERVER_IP }} >> ~/.ssh/known_hosts
+        
+        echo "✅ SSH setup completed!"
+
     - name: Update Private Satis Repository
-      uses: easingthemes/ssh-deploy@v5.1.0
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SATIS_SSH_PRIVATE_KEY }}
-        REMOTE_HOST: ${{ vars.SATIS_SERVER_IP }}
-        REMOTE_USER: ${{ vars.SATIS_SERVER_USER }}
-        REMOTE_PORT: '22'
-        TARGET: '/home/default/satis'
-        SCRIPT_AFTER: |
+      run: |
+        echo "🔄 Updating private Satis repository on ${{ vars.SATIS_SERVER_IP }}..."
+        
+        # SSH into the server and run generate.sh script
+        ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+          ${{ vars.SATIS_SERVER_USER }}@${{ vars.SATIS_SERVER_IP }} << 'EOF'
+          
           echo "📦 Running Satis generate.sh script..."
           
           # Navigate to Satis directory
@@ -168,6 +183,9 @@ jobs:
           fi
           
           echo "📊 Package ${{ steps.get_version.outputs.version }} is now available"
+        EOF
+        
+        echo "✅ Private Satis repository update completed!"
 
     - name: Display Release Info
       run: |
