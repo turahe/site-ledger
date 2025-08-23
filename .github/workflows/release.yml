@@ -73,22 +73,6 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Setup SSH for Private Repository
-      run: |
-        echo "🔑 Setting up SSH for private repository access..."
-        
-        # Create SSH directory
-        mkdir -p ~/.ssh
-        
-        # Add the private key (you'll need to add this as a secret)
-        echo "${{ secrets.SATIS_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        
-        # Add server to known hosts
-        ssh-keyscan -H ${{ vars.SATIS_SERVER_IP }} >> ~/.ssh/known_hosts
-        
-        echo "✅ SSH setup completed!"
-
     - name: Get version from tag
       id: get_version
       run: |
@@ -144,13 +128,14 @@ jobs:
         retention-days: 30
 
     - name: Update Private Satis Repository
-      run: |
-        echo "🔄 Updating private Satis repository on ${{ vars.SATIS_SERVER_IP }}..."
-        
-        # SSH into the server and run generate.sh script
-        ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
-          ${{ vars.SATIS_SERVER_USER }}@${{ vars.SATIS_SERVER_IP }} << 'EOF'
-          
+      uses: easingthemes/ssh-deploy@v5.1.0
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SATIS_SSH_PRIVATE_KEY }}
+        REMOTE_HOST: ${{ vars.SATIS_SERVER_IP }}
+        REMOTE_USER: ${{ vars.SATIS_SERVER_USER }}
+        REMOTE_PORT: '22'
+        TARGET: '/home/default/satis'
+        SCRIPT_AFTER: |
           echo "📦 Running Satis generate.sh script..."
           
           # Navigate to Satis directory
@@ -183,9 +168,6 @@ jobs:
           fi
           
           echo "📊 Package ${{ steps.get_version.outputs.version }} is now available"
-        EOF
-        
-        echo "✅ Private Satis repository update completed!"
 
     - name: Display Release Info
       run: |
