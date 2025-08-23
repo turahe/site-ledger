@@ -73,6 +73,22 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: Setup SSH for Private Repository
+      run: |
+        echo "🔑 Setting up SSH for private repository access..."
+        
+        # Create SSH directory
+        mkdir -p ~/.ssh
+        
+        # Add the private key (you'll need to add this as a secret)
+        echo "${{ secrets.SATIS_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        
+        # Add server to known hosts
+        ssh-keyscan -H 178.128.84.149 >> ~/.ssh/known_hosts
+        
+        echo "✅ SSH setup completed!"
+
     - name: Get version from tag
       id: get_version
       run: |
@@ -127,8 +143,37 @@ jobs:
         path: coverage/
         retention-days: 30
 
+    - name: Update Private Satis Repository
+      run: |
+        echo "🔄 Updating private Satis repository on 178.128.84.149..."
+        
+        # SSH into the server and update Satis
+        ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
+          root@178.128.84.149 << 'EOF'
+          
+          echo "📦 Updating Satis repository..."
+          
+          # Navigate to Satis directory (adjust path if needed)
+          cd /var/www/satis || cd /opt/satis || cd ~/satis
+          
+          # Update Satis with the new package version
+          php bin/satis build satis.json public/
+          
+          # Clear any caches if needed
+          if [ -f "public/clear-cache.sh" ]; then
+            chmod +x public/clear-cache.sh
+            ./public/clear-cache.sh
+          fi
+          
+          echo "✅ Satis repository updated successfully!"
+          echo "📊 Package ${{ steps.get_version.outputs.version }} is now available"
+        EOF
+        
+        echo "✅ Private Satis repository update completed!"
+
     - name: Display Release Info
       run: |
         echo "🎉 Release ${{ steps.get_version.outputs.version }} created successfully!"
         echo "📊 Coverage report uploaded as artifact"
+        echo "🔄 Private Satis repository updated on 178.128.84.149"
         echo "🔗 Release URL: https://github.com/${{ github.repository }}/releases/tag/${{ steps.get_version.outputs.version }}"
