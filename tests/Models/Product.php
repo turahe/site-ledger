@@ -16,6 +16,6 @@ class Product extends Model
 
     protected static function newFactory()
     {
-        return ProductFactory::new();
+        return new ProductFactory();
     }
 }

@@ -65,7 +65,7 @@ class InvoiceTest extends TestCase
     public function it_can_delete_a_invoice()
     {
         $user = User::factory()->create();
-        $invoice = InvoiceFactory::new()->create([
+        $invoice = (new InvoiceFactory())->create([
             'model_id' => $user->getKey(),
             'model_type' => $user->getMorphClass(),
         ]);
@@ -79,7 +79,7 @@ class InvoiceTest extends TestCase
     public function it_errors_when_updating_the_invoice()
     {
         $user = User::factory()->create();
-        $invoice = InvoiceFactory::new()->create([
+        $invoice = (new InvoiceFactory())->create([
             'model_id' => $user->getKey(),
             'model_type' => $user->getMorphClass(),
         ]);
@@ -92,7 +92,7 @@ class InvoiceTest extends TestCase
     public function it_can_update_the_invoice()
     {
         $user = User::factory()->create();
-        $invoice = InvoiceFactory::new()->create([
+        $invoice = (new InvoiceFactory())->create([
             'model_id' => $user->getKey(),
             'model_type' => $user->getMorphClass(),
         ]);
@@ -110,7 +110,7 @@ class InvoiceTest extends TestCase
     public function it_can_find_the_invoice()
     {
         $user = User::factory()->create();
-        $invoice = InvoiceFactory::new()->create([
+        $invoice = (new InvoiceFactory())->create([
             'model_id' => $user->getKey(),
             'model_type' => $user->getMorphClass(),
         ]);
@@ -125,7 +125,7 @@ class InvoiceTest extends TestCase
     public function it_can_find_the_invoice_has_items()
     {
         $user = User::factory()->create();
-        $invoice = InvoiceFactory::new()->create([
+        $invoice = (new InvoiceFactory())->create([
             'model_id' => $user->getKey(),
             'model_type' => $user->getMorphClass(),
         ]);
@@ -166,7 +166,7 @@ class InvoiceTest extends TestCase
     public function it_can_list_all_invoices()
     {
         $user = User::factory()->create();
-        $invoices = InvoiceFactory::new()->count(3)->create([
+        $invoices = (new InvoiceFactory())->count(3)->create([
             'model_id' => $user->getKey(),
             'model_type' => $user->getMorphClass(),
         ]);

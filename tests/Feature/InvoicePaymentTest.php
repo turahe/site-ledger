@@ -15,11 +15,11 @@ class InvoicePaymentTest extends TestCase
     public function it_can_create_the_invoice()
     {
         $user = User::factory()->create();
-        $invoice = InvoiceFactory::new()->create([
+        $invoice = (new InvoiceFactory())->create([
             'model_id' => $user->getKey(),
             'model_type' => $user->getMorphClass(),
         ]);
-        $voucher = VoucherFactory::new()->create([
+        $voucher = (new VoucherFactory())->create([
             'model_id' => $user->getKey(),
             'model_type' => $user->getMorphClass(),
         ]);
