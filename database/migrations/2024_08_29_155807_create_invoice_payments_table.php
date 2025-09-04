@@ -13,9 +13,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('invoice_payments', function (Blueprint $table) {
-            $table->ulid('id')->primary();
-            $table->foreignIdFor(\Turahe\Ledger\Models\Invoice::class, 'invoice_id')->index();
-            $table->foreignIdFor(\Turahe\Ledger\Models\Voucher::class, 'receipt_id')->index();
+            if (config('userstamps.users_table_column_type') === 'bigIncrements') {
+                $table->id();
+                $table->foreignId('invoice_id')->index();
+                $table->foreignId('receipt_id')->index();
+            }
+            if (config('userstamps.users_table_column_type') === 'ulid') {
+                $table->ulid('id')->primary();
+                $table->ulid('invoice_id')->index();
+                $table->ulid('receipt_id')->index();
+            }
+
+            if (config('userstamps.users_table_column_type') === 'uuid') {
+                $table->uuid('id')->primary();
+                $table->foreignUuidFor(\Turahe\Ledger\Models\Invoice::class, 'invoice_id')->index();
+                $table->foreignUuidFor(\Turahe\Ledger\Models\Voucher::class, 'receipt_id')->index();
+            }
 
             $table->string('currency')->default('IDR')->index();
 
@@ -55,11 +68,15 @@ return new class extends Migration
                 $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
                 $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
                 $table->foreign('deleted_by')->references('id')->on('users')->onDelete('set null');
+                $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
+                $table->foreign('receipt_id')->references('id')->on('vouchers')->onDelete('cascade');
             }
             if (config('userstamps.users_table_column_type') === 'ulid') {
                 $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
                 $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
                 $table->foreign('deleted_by')->references('id')->on('users')->onDelete('set null');
+                $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
+                $table->foreign('receipt_id')->references('id')->on('vouchers')->onDelete('cascade');
             }
             if (config('userstamps.users_table_column_type') === 'uuid') {
                 $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');

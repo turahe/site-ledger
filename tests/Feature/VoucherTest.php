@@ -37,7 +37,7 @@ class VoucherTest extends TestCase
     public function it_can_delete_a_voucher()
     {
         $user = User::factory()->create();
-        $voucher = (new VoucherFactory())->create([
+        $voucher = (new VoucherFactory)->create([
             'model_id' => $user->getKey(),
             'model_type' => $user->getMorphClass(),
         ]);
@@ -51,7 +51,7 @@ class VoucherTest extends TestCase
     public function it_errors_when_updating_the_voucher()
     {
         $user = User::factory()->create();
-        $voucher = (new VoucherFactory())->create([
+        $voucher = (new VoucherFactory)->create([
             'model_id' => $user->getKey(),
             'model_type' => $user->getMorphClass(),
         ]);
@@ -64,7 +64,7 @@ class VoucherTest extends TestCase
     public function it_can_update_the_voucher()
     {
         $user = User::factory()->create();
-        $voucher = (new VoucherFactory())->create([
+        $voucher = (new VoucherFactory)->create([
             'model_id' => $user->getKey(),
             'model_type' => $user->getMorphClass(),
         ]);
@@ -82,7 +82,7 @@ class VoucherTest extends TestCase
     public function it_can_find_the_voucher()
     {
         $user = User::factory()->create();
-        $voucher = (new VoucherFactory())->create([
+        $voucher = (new VoucherFactory)->create([
             'model_id' => $user->getKey(),
             'model_type' => $user->getMorphClass(),
         ]);
@@ -97,7 +97,7 @@ class VoucherTest extends TestCase
     public function it_can_list_all_vouchers()
     {
         $user = User::factory()->create();
-        $vouchers = (new VoucherFactory())->count(3)->create([
+        $vouchers = (new VoucherFactory)->count(3)->create([
             'model_id' => $user->getKey(),
             'model_type' => $user->getMorphClass(),
         ]);
@@ -106,4 +106,3 @@ class VoucherTest extends TestCase
         $this->assertCount(3, $vouchers->all());
     }
 }
-
